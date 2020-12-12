@@ -1,4 +1,5 @@
 from torch import nn
+from torch.nn import functional as F
 import pytorch_lightning as pl
 
 class LunaClassCNN(pl.LightningModule):
@@ -26,12 +27,20 @@ class LunaClassCNN(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         x, y = batch
         logits = self(x)
-        loss = nn.NLLLoss()
+        loss = F.nll_loss(logits, y)
+        return loss
 
+    def validation_step(self, batch, batch_idx):
+        x, y = batch
+        logits = self(x)
+        loss = F.nll_loss(logits, y)
+        return loss
 
-
-
-
+    def test_step(self, batch, batch_idx):
+        x, y = batch
+        logits = self(x)
+        loss = F.nll_loss(logits, y)
+        return loss
 
 
 class LunaCNNBlock(pl.LightningModule):
