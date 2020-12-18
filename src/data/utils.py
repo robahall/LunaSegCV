@@ -56,6 +56,8 @@ def extract_candidates_vals(file, diameter_dict, present_on_disk_set):
     candidate_info_list.sort(reverse=True)
     return candidate_info_list
 
+##Next steps get this into dataset.py
+
 
 if __name__ == "__main__":
     vals = getCandidateInfoList()
