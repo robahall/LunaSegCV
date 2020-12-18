@@ -1,10 +1,14 @@
-from pathlib import Path
 import csv
-
+import functools
+from pathlib import Path
+from collections import namedtuple
 from src import ROOT_DIR
 
+CandidateInfoTuple = namedtuple('CandidateInfoTuple',
+                                'isNodule, diameter_mm, series_uid, center_xyz'
+                                )
 
-
+@functools.lru_cache(1)
 def getCandidateInfoList():
     data_dir = Path(ROOT_DIR / 'data')
     mhd_list = data_dir.glob('subset*/*.mhd')
@@ -14,7 +18,9 @@ def getCandidateInfoList():
     with open(data_dir / 'annotations.csv', 'r') as annotation_file:
         diameter_dict = extract_annotation_vals(annotation_file)
     with open(data_dir / 'candidates.csv', 'r') as candidates_file:
-        extract_candidates_vals(candidates_file, diameter_dict, present_on_disk_set)
+        candidate_info_list = extract_candidates_vals(candidates_file, diameter_dict, present_on_disk_set)
+
+    return candidate_info_list
 
 def extract_annotation_vals(file):
     diameter_dict = {}
@@ -26,6 +32,7 @@ def extract_annotation_vals(file):
     return diameter_dict
 
 def extract_candidates_vals(file, diameter_dict, present_on_disk_set):
+    candidate_info_list = []
     for row in list(csv.reader(file))[1:]:
         series_uid = row[0]
         if series_uid not in present_on_disk_set:
@@ -37,13 +44,22 @@ def extract_candidates_vals(file, diameter_dict, present_on_disk_set):
         for annotation_tup in diameter_dict.get(series_uid, []):
             annotation_center_xyz, annotation_diameter_mm = annotation_tup
             for i in range(len(annotation_center_xyz)):
-
+                delta_mm = abs(candidate_center_xyz[i] - annotation_center_xyz[i])
+                if delta_mm > annotation_diameter_mm/4:
+                    break
+                else:
+                    candidate_diameter_mm = annotation_diameter_mm
+                    break
+        candidate_info_list.append(CandidateInfoTuple(
+            is_nodule, candidate_diameter_mm, series_uid, candidate_center_xyz
+            ))
+    candidate_info_list.sort(reverse=True)
+    return candidate_info_list
 
 
 if __name__ == "__main__":
-    getCandidateInfoList()
-
-
+    vals = getCandidateInfoList()
+    print(vals)
 
 
 

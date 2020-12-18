@@ -33,3 +33,6 @@ class LitLunda(pl.LightningDataModule):
         transforms = None
         return DataLoader(self.test, batch_size=64)
 
+
+
+
