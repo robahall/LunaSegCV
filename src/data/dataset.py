@@ -4,7 +4,7 @@ import pytorch_lightning as pl
 from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 
-class LitLunda(pl.LightningDataModule):
+class LitLuna(pl.LightningDataModule):
 
     def __init__(self, data_dir):
         super().__init__()
