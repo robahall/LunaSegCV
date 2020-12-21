@@ -12,7 +12,6 @@ class LitLuna(pl.LightningDataModule):
         self.transform = transforms.Compose([
         ])
         self.train_dims = None
-        self.vocab_size = 0
 
     def prepare_data(self):
         pass
