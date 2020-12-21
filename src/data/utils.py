@@ -2,7 +2,10 @@ import csv
 import functools
 from pathlib import Path
 from collections import namedtuple
+from torch.utils.data import Dataset
+
 from src import ROOT_DIR
+
 
 CandidateInfoTuple = namedtuple('CandidateInfoTuple',
                                 'isNodule, diameter_mm, series_uid, center_xyz'
@@ -57,6 +60,9 @@ def extract_candidates_vals(file, diameter_dict, present_on_disk_set):
     return candidate_info_list
 
 ##Next steps get this into dataset.py
+
+class LunaDataset(Dataset):
+    def __init__(self):
 
 
 if __name__ == "__main__":
