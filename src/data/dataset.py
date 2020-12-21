@@ -6,9 +6,8 @@ from torchvision import datasets, transforms
 
 class LitLuna(pl.LightningDataModule):
 
-    def __init__(self, data_dir):
+    def __init__(self):
         super().__init__()
-        self.data_dir = data_dir
         self.transform = transforms.Compose([
         ])
         self.train_dims = None
@@ -17,7 +16,8 @@ class LitLuna(pl.LightningDataModule):
         pass
 
     def setup(self):
-        self.train, self.val, self.test = load_datasets()
+        LunaDataset(candidateInfo_list=getCandidateInfoList())
+        self.train, self.val = random_split()
         self.train_dims = self.train.next_batch.size()
 
     def train_dataloader(self) -> DataLoader:
