@@ -172,7 +172,7 @@ class LunaDataset(Dataset):
 
         return candidate_t, pos_t, candidateInfo_tup.series_uid, torch.tensor(center_irc)
 
-
+## Next set up validation set.
 
 if __name__ == "__main__":
     ds =LunaDataset(candidateInfo_list=getCandidateInfoList())
