@@ -2,7 +2,8 @@ import os
 
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader, random_split
-from torchvision import datasets, transforms
+from src.data.utils import LunaDataset, getCandidateInfoList
+from torchvision import transforms
 
 class LitLuna(pl.LightningDataModule):
 
@@ -16,8 +17,8 @@ class LitLuna(pl.LightningDataModule):
         pass
 
     def setup(self):
-        LunaDataset(candidateInfo_list=getCandidateInfoList())
-        self.train, self.val = random_split()
+        luna_full = LunaDataset(candidateInfo_list=getCandidateInfoList())
+        self.train, self.val = random_split(luna_full)
         self.train_dims = self.train.next_batch.size()
 
     def train_dataloader(self) -> DataLoader:
