@@ -175,7 +175,7 @@ class LunaDataset(Dataset):
 ## Next set up validation set.
 
 if __name__ == "__main__":
-    ds =LunaDataset(candidateInfo_list=getCandidateInfoList())
+    ds = LunaDataset(candidateInfo_list=getCandidateInfoList())
     print(len(ds))
 
 
