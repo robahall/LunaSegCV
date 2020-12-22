@@ -132,9 +132,11 @@ class Ct:
         return ct_chunk, center_irc
 
 class LunaDataset(Dataset):
-    def __init__(self, ratio_int=0, candidateInfo_list=None,):
+    def __init__(self, series_uid=None, ratio_int=0, candidateInfo_list=None,):
         self.ratio_int = ratio_int
         self.candidateInfo_list = candidateInfo_list
+        if series_uid:
+            self.candidateInfo_list = [x for x in self.candidateInfo_list if x.series_uid == series_uid]
         self.negative_list = [nt for nt in self.candidateInfo_list if not nt.isNodule]
         self.pos_list = [nt for nt in self.candidateInfo_list if nt.isNodule]
 
