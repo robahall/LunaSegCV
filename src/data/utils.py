@@ -1,5 +1,6 @@
 import csv
 import functools
+import random
 from pathlib import Path
 from collections import namedtuple
 
@@ -149,6 +150,11 @@ class LunaDataset(Dataset):
         elif val_stride > 0:
             del self.candidateInfo_list[::val_stride]
             assert self.candidateInfo_list
+
+    def shuffleSamples(self):
+        if self.ratio_int:
+            random.shuffle(self.negative_list)
+            random.shuffle(self.pos_list)
 
     def __len__(self):
         if self.ratio_int:
