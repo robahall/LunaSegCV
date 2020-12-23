@@ -132,8 +132,9 @@ class Ct:
         return ct_chunk, center_irc
 
 class LunaDataset(Dataset):
-    def __init__(self, series_uid=None, ratio_int=0, candidateInfo_list=None,):
+    def __init__(self, series_uid=None, valid=False,ratio_int=0, candidateInfo_list=None,):
         self.ratio_int = ratio_int
+        self.isValSet_bool = valid
         self.candidateInfo_list = candidateInfo_list
         if series_uid:
             self.candidateInfo_list = [x for x in self.candidateInfo_list if x.series_uid == series_uid]
@@ -161,7 +162,7 @@ class LunaDataset(Dataset):
 
         width_irc = (32, 48, 48)
         ct = getCt(candidateInfo_tup.series_uid)
-        candidate_a, center_irc = ct.getRawCandidate( candidateInfo_tup.center_xyz, width_irc,)
+        candidate_a, center_irc = ct.getRawCandidate(candidateInfo_tup.center_xyz, width_irc,)
         candidate_t = torch.from_numpy(candidate_a).to(torch.float32)
         candidate_t = candidate_t.unsqueeze(0)
 
@@ -177,7 +178,7 @@ class LunaDataset(Dataset):
 ## Next set up validation set.
 
 if __name__ == "__main__":
-    ds = LunaDataset(candidateInfo_list=getCandidateInfoList())
+    ds =LunaDataset(candidateInfo_list=getCandidateInfoList())
     print(len(ds))
 
 
