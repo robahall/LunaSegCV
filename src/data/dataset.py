@@ -16,7 +16,7 @@ class LitLuna(pl.LightningDataModule):
     def prepare_data(self):
         pass
 
-    def setup(self):
+    def setup(self, passed):
         self.train= LunaDataset(candidateInfo_list=getCandidateInfoList(), valid=False)
         self.val = LunaDataset(candidateInfo_list=getCandidateInfoList(), valid=True)
 
