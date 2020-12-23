@@ -17,8 +17,8 @@ class LitLuna(pl.LightningDataModule):
         pass
 
     def setup(self):
-        luna_full = LunaDataset(candidateInfo_list=getCandidateInfoList())
-        self.train, self.val = random_split(luna_full)
+        self.train= LunaDataset(candidateInfo_list=getCandidateInfoList(), valid=False)
+        self.val = LunaDataset(candidateInfo_list=getCandidateInfoList(), valid=True)
         self.train_dims = self.train.next_batch.size()
 
     def train_dataloader(self) -> DataLoader:
