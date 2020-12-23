@@ -6,7 +6,7 @@ import pytorch_lightning as pl
 class LunaClassCNN(pl.LightningModule):
     def __init__(self, in_channels=1, conv_channels=8):
         super().__init__()
-        self.tail_batchnorm =nn.BatchNorm3d(1)
+        self.tail_batchnorm = nn.BatchNorm3d(1)
         self.block1 = LunaCNNBlock(in_channels, conv_channels)
         self.block2 = LunaCNNBlock(conv_channels, conv_channels*2)
         self.block3 = LunaCNNBlock(conv_channels*2, conv_channels*4)
