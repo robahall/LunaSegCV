@@ -7,11 +7,11 @@ from torchvision import transforms
 
 class LitLuna(pl.LightningDataModule):
 
-    def __init__(self):
+    def __init__(self, batch_size):
         super().__init__()
         self.transform = transforms.Compose([
         ])
-        self.train_dims = None
+        self.batch_size = batch_size
 
     def prepare_data(self):
         pass
@@ -19,19 +19,19 @@ class LitLuna(pl.LightningDataModule):
     def setup(self):
         self.train= LunaDataset(candidateInfo_list=getCandidateInfoList(), valid=False)
         self.val = LunaDataset(candidateInfo_list=getCandidateInfoList(), valid=True)
-        self.train_dims = self.train.next_batch.size()
+
 
     def train_dataloader(self) -> DataLoader:
-        transforms = None
-        return DataLoader(self.train, batch_size=64)
+        transforms = self.transform
+        return DataLoader(self.train, batch_size=self.batch_size)
 
     def val_dataloader(self):
-        transforms = None
-        return DataLoader(self.val, batch_size=64)
+        transforms = self.transform
+        return DataLoader(self.val, batch_size=self.batch_size)
 
     def test_dataloader(self):
-        transforms = None
-        return DataLoader(self.test, batch_size=64)
+        transforms = self.transform
+        return DataLoader(self.test, batch_size=self.batch_size)
 
 
 
