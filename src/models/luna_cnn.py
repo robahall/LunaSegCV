@@ -1,5 +1,6 @@
 from torch import nn
 from torch.nn import functional as F
+from torch.optim import SGD
 import pytorch_lightning as pl
 
 class LunaClassCNN(pl.LightningModule):
@@ -41,6 +42,9 @@ class LunaClassCNN(pl.LightningModule):
         logits = self(x)
         loss = F.nll_loss(logits, y)
         return loss
+
+    def configure_optimizers(self):
+        return SGD(self.model.parameters(), lr=0.001, momentum=0.99)
 
 
 class LunaCNNBlock(pl.LightningModule):
