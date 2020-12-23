@@ -151,7 +151,7 @@ class LunaDataset(Dataset):
             del self.candidateInfo_list[::val_stride]
             assert self.candidateInfo_list
 
-    def shuffleSamples(self):
+    def shuffle_samples(self):
         if self.ratio_int:
             random.shuffle(self.negative_list)
             random.shuffle(self.pos_list)
