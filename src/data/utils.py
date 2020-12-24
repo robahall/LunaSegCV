@@ -134,7 +134,9 @@ class Ct:
 
 class LunaDataset(Dataset):
 
-    """TODO: This needs to be re-written. Ending up val_stride assertion errors in Lightning"""
+    """
+    TODO: This needs to be re-written. Ending up val_stride assertion errors in Lightning
+    """
     def __init__(self, val_stride=0, series_uid=None, valid=False, ratio_int=0, candidateInfo_list=None,):
         self.ratio_int = ratio_int
         self.isValSet_bool = valid
