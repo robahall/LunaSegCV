@@ -44,7 +44,7 @@ class LunaClassCNN(pl.LightningModule):
         return loss
 
     def configure_optimizers(self):
-        return SGD(self.model.parameters(), lr=0.001, momentum=0.99)
+        return SGD(self.model.parameters(), lr=0.0001, momentum=0.8)
 
 
 class LunaCNNBlock(pl.LightningModule):
@@ -54,7 +54,7 @@ class LunaCNNBlock(pl.LightningModule):
         self.relu1 = nn.ReLU(inplace=True)
         self.conv2 = nn.Conv3d(conv_channels, conv_channels, kernel_size=3, padding=1, bias=True)
         self.relu2 = nn.ReLU(inplace=True)
-        self.maxpool =nn.MaxPool3d(2,2)
+        self.maxpool =nn.MaxPool3d(2, 2)
 
     def forward(self, input_batch):
         block_out = self.conv1(input_batch)
